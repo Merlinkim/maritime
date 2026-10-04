@@ -120,6 +120,7 @@ a {
 .graph-stage {
   position: absolute;
   inset: 72px 0 0;
+  opacity: 0.62;
 }
 
 .link-layer {
@@ -190,6 +191,103 @@ a {
   border-radius: 8px;
   background: rgba(18, 20, 26, 0.72);
   backdrop-filter: blur(20px);
+}
+
+.resume-hero {
+  position: relative;
+  z-index: 12;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
+  width: min(760px, calc(100vw - 56px));
+  padding: 112px 0 72px;
+  margin-left: clamp(28px, 7vw, 96px);
+  pointer-events: none;
+}
+
+.resume-hero > * {
+  pointer-events: auto;
+}
+
+.resume-kicker {
+  margin: 0 0 14px;
+  color: #aeb6c2;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.resume-hero h1 {
+  max-width: 700px;
+  margin: 0;
+  color: #f2efe7;
+  font-size: clamp(46px, 7vw, 86px);
+  font-weight: 700;
+  line-height: 0.94;
+}
+
+.resume-lede {
+  max-width: 620px;
+  margin: 24px 0 0;
+  color: #c4c8cf;
+  font-size: 18px;
+  line-height: 1.72;
+}
+
+.resume-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 30px;
+}
+
+.resume-actions a,
+.resume-actions button {
+  display: inline-flex;
+  align-items: center;
+  height: 42px;
+  padding: 0 16px;
+  border-radius: 8px;
+  border: 1px solid rgba(242, 239, 231, 0.16);
+  background: rgba(255, 255, 255, 0.04);
+  color: #f2efe7;
+  cursor: pointer;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.resume-actions button {
+  background: #e9e2d1;
+  color: #111318;
+}
+
+.resume-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  max-width: 640px;
+  margin: 38px 0 0;
+}
+
+.resume-stats div {
+  border-top: 1px solid rgba(242, 239, 231, 0.15);
+  padding-top: 14px;
+}
+
+.resume-stats dt {
+  color: #f2efe7;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.resume-stats dd {
+  margin: 4px 0 0;
+  color: #aeb6c2;
+  font-size: 13px;
+  line-height: 1.45;
 }
 
 .eyebrow {
@@ -529,6 +627,16 @@ blockquote {
     right: 18px;
     bottom: 18px;
     width: auto;
+  }
+
+  .resume-hero {
+    min-height: auto;
+    padding: 104px 0 220px;
+    margin-inline: 20px;
+  }
+
+  .resume-stats {
+    grid-template-columns: 1fr;
   }
 
   .graph-stage {

@@ -156,10 +156,40 @@ export function ConstellationHome({ graph }: { graph: KnowledgeGraph }) {
           <span />
         </button>
         <Link className="brand" href="/">
-          Maritime Knowledge
+          Maritime Portfolio
         </Link>
-        <div className="mode-chip">Knowledge Graph</div>
+        <div className="mode-chip">DP Knowledge Graph</div>
       </header>
+
+      <section className="resume-hero" aria-label="Resume introduction">
+        <p className="resume-kicker">Maritime · Dynamic Positioning · Frontend</p>
+        <h1>Maritime DP Knowledge Portfolio</h1>
+        <p className="resume-lede">
+          A personal maritime knowledge graph built from Obsidian notes and published as a Next.js
+          study portfolio. It documents my learning path across DP systems, FMEA, IMO guidance,
+          SOLAS, MARPOL, COLREG, and ship theory.
+        </p>
+        <div className="resume-actions">
+          <button type="button" onClick={() => setMenuOpen(true)}>
+            Browse knowledge base
+          </button>
+          <Link href="/notes/dp/dp-overview/what-is-dp">Start with DP</Link>
+        </div>
+        <dl className="resume-stats">
+          <div>
+            <dt>{graph.nodes.filter((node) => node.type === "note").length}</dt>
+            <dd>Study notes</dd>
+          </div>
+          <div>
+            <dt>DP</dt>
+            <dd>FMEA · MSC.1/Circ.1580</dd>
+          </div>
+          <div>
+            <dt>IMO</dt>
+            <dd>SOLAS · MARPOL · COLREG</dd>
+          </div>
+        </dl>
+      </section>
 
       <section className="graph-stage" aria-label="Knowledge constellation">
         <svg className="link-layer" viewBox="0 0 100 100" preserveAspectRatio="none">
