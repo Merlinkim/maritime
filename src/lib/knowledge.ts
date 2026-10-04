@@ -1,8 +1,10 @@
 import fs from "node:fs";
 import path from "node:path";
 
-const vaultRoot = path.resolve(process.cwd(), "..");
-const contentRoot = path.join(vaultRoot, "Maritime Knowledge");
+const bundledContentRoot = path.join(process.cwd(), "content", "Maritime Knowledge");
+const externalVaultRoot = path.resolve(process.cwd(), "..");
+const externalContentRoot = path.join(externalVaultRoot, "Maritime Knowledge");
+const contentRoot = fs.existsSync(bundledContentRoot) ? bundledContentRoot : externalContentRoot;
 
 export type KnowledgeNode = {
   id: string;
