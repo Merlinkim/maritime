@@ -125,7 +125,7 @@ export function ConstellationHome({ graph }: { graph: KnowledgeGraph }) {
         <h1>Kim Inseong</h1>
         <p className="resume-lede">
           A Korean deck officer with seagoing experience across chemical tankers, oil/chemical
-          tankers, passenger vessels, and general cargo vessels. This site introduces my maritime
+          tankers, LCTs, car ferries, and passenger vessels. This site introduces my maritime
           background and shows the knowledge base I am building for DP, FMEA, IMO guidance, SOLAS,
           MARPOL, COLREG, and ship theory.
         </p>
@@ -141,8 +141,8 @@ export function ConstellationHome({ graph }: { graph: KnowledgeGraph }) {
             <dd>Certified sea service</dd>
           </div>
           <div>
-            <dt>2/O</dt>
-            <dd>Second Officer experience</dd>
+            <dt>II/2</dt>
+            <dd>Chief Mate / Master unlimited</dd>
           </div>
           <div>
             <dt>{notes.length}</dt>
@@ -157,24 +157,25 @@ export function ConstellationHome({ graph }: { graph: KnowledgeGraph }) {
           <h2>Merchant deck officer</h2>
           <span>
             Graduated from Incheon Maritime High School, Navigation Department. Built practical
-            watchkeeping and cargo-operation experience through cadet, third officer, and second
-            officer roles.
+            watchkeeping and cargo-operation experience through cadet, third officer, second
+            officer, and management-level license preparation.
           </span>
         </div>
         <div className="resume-card">
           <p>Sea Service</p>
-          <h2>Chemical tanker and cargo vessel experience</h2>
+          <h2>Chemical tanker, LCT and car ferry experience</h2>
           <span>
-            Experience includes chemical tankers with KTM Shipping and multiple coastal/general
-            cargo vessel assignments, with official sea service totaling 7 years 9 months 25 days.
+            Experience includes chemical tankers with KTM Shipping plus LCT and car ferry service,
+            with official sea service totaling 7 years 9 months 25 days.
           </span>
         </div>
         <div className="resume-card">
           <p>License and Training</p>
-          <h2>2nd Mate license track with DP study</h2>
+          <h2>STCW II/2 license track with DP study</h2>
           <span>
-            Holds maritime radio and safety training records, ECDIS Basic, leadership and
-            management training, and DP Induction study toward offshore/DP career development.
+            Preparing around the STCW II/2 management-level license scope for Chief Mate/Master
+            unlimited, with radio, safety, ECDIS Basic, leadership and management training, and DP
+            Induction study toward offshore/DP career development.
           </span>
         </div>
         <div className="resume-card muted">
