@@ -61,6 +61,7 @@ export function MarkdownView({ body }: { body: string }) {
   const blocks = [];
   let tableLines: string[] = [];
   let listLines: string[] = [];
+  let codeFence: { lang: string; lines: string[] } | null = null;
 
   function flushTable() {
     if (tableLines.length) {
@@ -83,6 +84,27 @@ export function MarkdownView({ body }: { body: string }) {
   }
 
   for (const line of lines) {
+    if (line.startsWith("```")) {
+      flushTable();
+      flushList();
+      if (codeFence) {
+        blocks.push(
+          <pre className={codeFence.lang === "mermaid" ? "mermaid-block" : undefined} key={blocks.length}>
+            <code>{codeFence.lines.join("\n")}</code>
+          </pre>,
+        );
+        codeFence = null;
+      } else {
+        codeFence = { lang: line.slice(3).trim(), lines: [] };
+      }
+      continue;
+    }
+
+    if (codeFence) {
+      codeFence.lines.push(line);
+      continue;
+    }
+
     if (/^\s*\|.+\|\s*$/.test(line)) {
       flushList();
       tableLines.push(line);
@@ -112,6 +134,13 @@ export function MarkdownView({ body }: { body: string }) {
 
   flushTable();
   flushList();
+  if (codeFence) {
+    blocks.push(
+      <pre className={codeFence.lang === "mermaid" ? "mermaid-block" : undefined} key={blocks.length}>
+        <code>{codeFence.lines.join("\n")}</code>
+      </pre>,
+    );
+  }
 
   return <article className="markdown-view">{blocks}</article>;
 }

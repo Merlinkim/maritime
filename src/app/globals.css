@@ -533,6 +533,30 @@ a {
   font-family: var(--font-geist-mono), monospace;
 }
 
+.markdown-view pre {
+  max-width: 100%;
+  margin: 18px 0;
+  overflow-x: auto;
+  border: 1px solid rgba(24, 32, 43, 0.12);
+  border-radius: 8px;
+  background: #151922;
+  color: #eef5ff;
+  padding: 16px;
+  line-height: 1.55;
+}
+
+.markdown-view pre code {
+  display: block;
+  background: transparent;
+  padding: 0;
+  color: inherit;
+  white-space: pre;
+}
+
+.markdown-view .mermaid-block {
+  border-color: rgba(57, 213, 255, 0.25);
+}
+
 .wiki-link {
   border-bottom: 1px solid rgba(57, 213, 255, 0.55);
   color: #007399;
