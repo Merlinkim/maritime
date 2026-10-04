@@ -35,8 +35,13 @@ a {
 
 .home-shell {
   position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.72fr);
+  align-items: center;
+  gap: clamp(28px, 6vw, 80px);
   min-height: 100vh;
   overflow: hidden;
+  padding: 96px clamp(28px, 7vw, 96px) 56px;
   background:
     linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
@@ -45,22 +50,6 @@ a {
     54px 54px,
     54px 54px,
     auto;
-}
-
-.starfield {
-  position: absolute;
-  inset: 0;
-  opacity: 0.42;
-  background-image:
-    radial-gradient(circle, rgba(242, 239, 231, 0.32) 0 1px, transparent 1px),
-    radial-gradient(circle, rgba(179, 191, 207, 0.18) 0 1px, transparent 1px);
-  background-position:
-    0 0,
-    38px 56px;
-  background-size:
-    118px 118px,
-    173px 173px;
-  animation: star-drift 60s linear infinite;
 }
 
 .topbar {
@@ -117,97 +106,13 @@ a {
   font-size: 12px;
 }
 
-.graph-stage {
-  position: absolute;
-  inset: 72px 0 0;
-  opacity: 0.62;
-}
-
-.link-layer {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.constellation-line {
-  stroke: rgba(215, 221, 231, 0.075);
-  stroke-width: 0.045;
-  animation: line-breathe 5.5s ease-in-out infinite;
-}
-
-.constellation-line.lit {
-  stroke: rgba(214, 216, 205, 0.42);
-  stroke-width: 0.085;
-}
-
-.star-node {
-  --star-size: 3px;
-  --star-color: #d5def0;
-  position: absolute;
-  z-index: 5;
-  display: block;
-  width: var(--star-size);
-  height: var(--star-size);
-  border: 0;
-  border-radius: 50%;
-  background: var(--star-color);
-  opacity: 0.72;
-  transform: translate(-50%, -50%);
-  transition:
-    opacity 140ms ease,
-    transform 140ms ease,
-    box-shadow 140ms ease;
-}
-
-.star-node:hover,
-.star-node.lit {
-  opacity: 1;
-  transform: translate(-50%, -50%) scale(1.75);
-  box-shadow: 0 0 10px color-mix(in srgb, var(--star-color) 58%, transparent);
-}
-
-.star-node span {
-  position: absolute;
-  top: calc(100% + 10px);
-  left: 50%;
-  width: max-content;
-  max-width: 180px;
-  transform: translateX(-50%);
-  color: #ede8dc;
-  font-size: 12px;
-  font-weight: 600;
-  text-shadow: 0 1px 10px #0f1115;
-}
-
-.info-panel {
-  position: fixed;
-  z-index: 10;
-  right: 28px;
-  bottom: 28px;
-  width: min(340px, calc(100vw - 56px));
-  padding: 20px;
-  border: 1px solid rgba(242, 239, 231, 0.1);
-  border-radius: 8px;
-  background: rgba(18, 20, 26, 0.72);
-  backdrop-filter: blur(20px);
-}
-
 .resume-hero {
   position: relative;
   z-index: 12;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  min-height: 100vh;
-  width: min(760px, calc(100vw - 56px));
-  padding: 112px 0 72px;
-  margin-left: clamp(28px, 7vw, 96px);
-  pointer-events: none;
-}
-
-.resume-hero > * {
-  pointer-events: auto;
+  width: 100%;
 }
 
 .resume-kicker {
@@ -223,7 +128,7 @@ a {
   max-width: 700px;
   margin: 0;
   color: #f2efe7;
-  font-size: clamp(46px, 7vw, 86px);
+  font-size: clamp(48px, 7vw, 92px);
   font-weight: 700;
   line-height: 0.94;
 }
@@ -270,6 +175,62 @@ a {
   gap: 12px;
   max-width: 640px;
   margin: 38px 0 0;
+}
+
+.resume-panel {
+  position: relative;
+  z-index: 12;
+  display: grid;
+  gap: 12px;
+}
+
+.resume-card {
+  border: 1px solid rgba(242, 239, 231, 0.12);
+  border-radius: 8px;
+  padding: 22px;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.resume-card p {
+  margin: 0 0 12px;
+  color: #aeb6c2;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.resume-card h2 {
+  margin: 0 0 10px;
+  color: #f2efe7;
+  font-size: 22px;
+  line-height: 1.18;
+}
+
+.resume-card span {
+  color: #c4c8cf;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.resume-card button {
+  display: inline-flex;
+  align-items: center;
+  height: 38px;
+  margin-top: 4px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 8px;
+  background: #e9e2d1;
+  color: #111318;
+  cursor: pointer;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.resume-card.muted {
+  background: rgba(233, 226, 209, 0.07);
 }
 
 .resume-stats div {
@@ -622,6 +583,11 @@ blockquote {
     display: none;
   }
 
+  .home-shell {
+    display: block;
+    padding: 92px 20px 40px;
+  }
+
   .info-panel {
     left: 18px;
     right: 18px;
@@ -630,17 +596,15 @@ blockquote {
   }
 
   .resume-hero {
-    min-height: auto;
-    padding: 104px 0 220px;
-    margin-inline: 20px;
+    padding: 0;
   }
 
   .resume-stats {
     grid-template-columns: 1fr;
   }
 
-  .graph-stage {
-    inset-top: 64px;
+  .resume-panel {
+    margin-top: 30px;
   }
 
   .note-shell {

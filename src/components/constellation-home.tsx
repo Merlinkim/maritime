@@ -1,8 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import type React from "react";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import type { KnowledgeGraph, KnowledgeNode } from "@/lib/knowledge";
 
 const colors: Record<string, string> = {
@@ -16,30 +15,6 @@ const colors: Record<string, string> = {
   circ: "#92c8d6",
   general: "#b8bfca",
 };
-
-function nodePosition(node: KnowledgeNode, index: number, total: number) {
-  if (node.category === "root") return { x: 50, y: 43, size: 8 };
-
-  const categoryOffsets: Record<string, number> = {
-    dp: -0.35,
-    solas: 0.75,
-    marpol: 1.55,
-    colreg: 2.35,
-    ship: 3.25,
-    fmea: 4.05,
-    circ: 4.65,
-    general: 5.35,
-  };
-  const base = categoryOffsets[node.category] ?? 0;
-  const wobble = (index % 13) * 0.085;
-  const angle = base + wobble + (index / Math.max(total, 1)) * 0.42;
-  const radius = node.depth < 2 ? 19 + node.depth * 7 : 28 + (index % 7) * 3.4;
-  return {
-    x: 50 + Math.cos(angle) * radius,
-    y: 47 + Math.sin(angle) * radius * 0.68,
-    size: node.category === "dp" && node.depth < 2 ? 5 : node.type === "folder" ? 3.7 : 2.4,
-  };
-}
 
 function childrenOf(nodes: KnowledgeNode[], parentId?: string) {
   return nodes.filter((node) => node.parentId === parentId).sort((a, b) => a.path.localeCompare(b.path, "en", { numeric: true }));
@@ -128,27 +103,11 @@ export function ConstellationHome({ graph }: { graph: KnowledgeGraph }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeId, setActiveId] = useState("Maritime Knowledge.md");
   const [query, setQuery] = useState("");
-
-  const positioned = useMemo(
-    () =>
-      graph.nodes.map((node, index) => ({
-        ...node,
-        ...nodePosition(node, index, graph.nodes.length),
-      })),
-    [graph.nodes],
-  );
-  const byId = new Map(positioned.map((node) => [node.id, node]));
-  const active = byId.get(activeId) ?? positioned[0];
-  const filtered = positioned.filter((node) => node.title.toLowerCase().includes(query.toLowerCase()));
-  const connected = new Set(
-    graph.links
-      .filter((link) => link.source === activeId || link.target === activeId)
-      .flatMap((link) => [link.source, link.target]),
-  );
+  const notes = graph.nodes.filter((node) => node.type === "note");
+  const filtered = graph.nodes.filter((node) => node.title.toLowerCase().includes(query.toLowerCase()));
 
   return (
     <main className="home-shell">
-      <div className="starfield" />
       <header className="topbar">
         <button className="icon-button" aria-label="Open navigation" onClick={() => setMenuOpen(true)}>
           <span />
@@ -162,12 +121,12 @@ export function ConstellationHome({ graph }: { graph: KnowledgeGraph }) {
       </header>
 
       <section className="resume-hero" aria-label="Resume introduction">
-        <p className="resume-kicker">Maritime · Dynamic Positioning · Frontend</p>
+        <p className="resume-kicker">Maritime · Dynamic Positioning · Knowledge Work</p>
         <h1>Maritime DP Knowledge Portfolio</h1>
         <p className="resume-lede">
-          A personal maritime knowledge graph built from Obsidian notes and published as a Next.js
-          study portfolio. It documents my learning path across DP systems, FMEA, IMO guidance,
-          SOLAS, MARPOL, COLREG, and ship theory.
+          A resume-style study portfolio showing how I organize maritime knowledge while building
+          practical frontend tools. The project documents my learning path across DP systems, FMEA,
+          IMO MSC.1/Circ.1580, SOLAS, MARPOL, COLREG, and ship theory.
         </p>
         <div className="resume-actions">
           <button type="button" onClick={() => setMenuOpen(true)}>
@@ -177,7 +136,7 @@ export function ConstellationHome({ graph }: { graph: KnowledgeGraph }) {
         </div>
         <dl className="resume-stats">
           <div>
-            <dt>{graph.nodes.filter((node) => node.type === "note").length}</dt>
+            <dt>{notes.length}</dt>
             <dd>Study notes</dd>
           </div>
           <div>
@@ -191,61 +150,30 @@ export function ConstellationHome({ graph }: { graph: KnowledgeGraph }) {
         </dl>
       </section>
 
-      <section className="graph-stage" aria-label="Knowledge constellation">
-        <svg className="link-layer" viewBox="0 0 100 100" preserveAspectRatio="none">
-          {graph.links.map((link, index) => {
-            const source = byId.get(link.source);
-            const target = byId.get(link.target);
-            if (!source || !target) return null;
-            const isLit = activeId === link.source || activeId === link.target;
-            return (
-              <line
-                key={`${link.source}-${link.target}-${index}`}
-                x1={source.x}
-                y1={source.y}
-                x2={target.x}
-                y2={target.y}
-                className={isLit ? "constellation-line lit" : "constellation-line"}
-                style={{ animationDelay: `${(index % 11) * 0.45}s` }}
-              />
-            );
-          })}
-        </svg>
-
-        {positioned.map((node) => {
-          const lit = node.id === activeId || connected.has(node.id);
-          const href = node.type === "note" ? `/notes/${node.slug.join("/")}` : "#";
-          return (
-            <Link
-              href={href}
-              key={node.id}
-              className={lit ? "star-node lit" : "star-node"}
-              style={{
-                left: `${node.x}%`,
-                top: `${node.y}%`,
-                "--star-size": `${node.size}px`,
-                "--star-color": colors[node.category],
-                animationDelay: `${(node.depth * 0.7 + positioned.indexOf(node) * 0.09) % 5}s`,
-              } as React.CSSProperties}
-              onMouseEnter={() => setActiveId(node.id)}
-              onClick={(event) => {
-                if (node.type !== "note") event.preventDefault();
-                setActiveId(node.id);
-              }}
-              aria-label={node.title}
-            >
-              {(node.category === "root" || node.title === "DP") && <span>{node.title}</span>}
-            </Link>
-          );
-        })}
+      <section className="resume-panel" aria-label="Portfolio highlights">
+        <div className="resume-card">
+          <p>Current Focus</p>
+          <h2>DP Systems and Offshore Operations</h2>
+          <span>Power · Thrusters · DP Control · PRS · Sensors · HMI</span>
+        </div>
+        <div className="resume-card">
+          <p>Evidence of Study</p>
+          <h2>{notes.length} structured notes</h2>
+          <span>Built from an Obsidian vault and rendered as a Next.js knowledge site.</span>
+        </div>
+        <div className="resume-card">
+          <p>Technical Stack</p>
+          <h2>Next.js · TypeScript · Markdown</h2>
+          <span>Static generated pages, custom note indexer, searchable navigation.</span>
+        </div>
+        <div className="resume-card muted">
+          <p>Navigation</p>
+          <h2>Knowledge base</h2>
+          <button type="button" onClick={() => setMenuOpen(true)}>
+            Open table of contents
+          </button>
+        </div>
       </section>
-
-      <aside className="info-panel">
-        <p className="eyebrow">{active?.type === "folder" ? "Folder" : "Note"}</p>
-        <h1>{active?.title}</h1>
-        <p>{active?.path}</p>
-        {active?.type === "note" && <Link href={`/notes/${active.slug.join("/")}`}>Open page</Link>}
-      </aside>
 
       <nav className={menuOpen ? "side-drawer open" : "side-drawer"} aria-label="Table of contents">
         <button className="close-button" aria-label="Close navigation" onClick={() => setMenuOpen(false)}>
