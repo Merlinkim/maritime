@@ -115,62 +115,73 @@ export function ConstellationHome({ graph }: { graph: KnowledgeGraph }) {
           <span />
         </button>
         <Link className="brand" href="/">
-          Maritime Portfolio
+          Kim Inseong
         </Link>
-        <div className="mode-chip">DP Knowledge Graph</div>
+        <div className="mode-chip">Deck Officer Portfolio</div>
       </header>
 
       <section className="resume-hero" aria-label="Resume introduction">
-        <p className="resume-kicker">Maritime · Dynamic Positioning · Knowledge Work</p>
-        <h1>Maritime DP Knowledge Portfolio</h1>
+        <p className="resume-kicker">Deck Officer · Chemical Tanker · DP Study</p>
+        <h1>Kim Inseong</h1>
         <p className="resume-lede">
-          A resume-style study portfolio showing how I organize maritime knowledge while building
-          practical frontend tools. The project documents my learning path across DP systems, FMEA,
-          IMO MSC.1/Circ.1580, SOLAS, MARPOL, COLREG, and ship theory.
+          A Korean deck officer with seagoing experience across chemical tankers, oil/chemical
+          tankers, passenger vessels, and general cargo vessels. This site introduces my maritime
+          background and shows the knowledge base I am building for DP, FMEA, IMO guidance, SOLAS,
+          MARPOL, COLREG, and ship theory.
         </p>
         <div className="resume-actions">
           <button type="button" onClick={() => setMenuOpen(true)}>
-            Browse knowledge base
+            View study archive
           </button>
-          <Link href="/notes/dp/dp-overview/what-is-dp">Start with DP</Link>
+          <Link href="/notes/dp/dp-overview/what-is-dp">DP study notes</Link>
         </div>
         <dl className="resume-stats">
           <div>
+            <dt>7Y 9M</dt>
+            <dd>Certified sea service</dd>
+          </div>
+          <div>
+            <dt>2/O</dt>
+            <dd>Second Officer experience</dd>
+          </div>
+          <div>
             <dt>{notes.length}</dt>
-            <dd>Study notes</dd>
-          </div>
-          <div>
-            <dt>DP</dt>
-            <dd>FMEA · MSC.1/Circ.1580</dd>
-          </div>
-          <div>
-            <dt>IMO</dt>
-            <dd>SOLAS · MARPOL · COLREG</dd>
+            <dd>Structured maritime notes</dd>
           </div>
         </dl>
       </section>
 
       <section className="resume-panel" aria-label="Portfolio highlights">
         <div className="resume-card">
-          <p>Current Focus</p>
-          <h2>DP Systems and Offshore Operations</h2>
-          <span>Power · Thrusters · DP Control · PRS · Sensors · HMI</span>
+          <p>Professional Background</p>
+          <h2>Merchant deck officer</h2>
+          <span>
+            Graduated from Incheon Maritime High School, Navigation Department. Built practical
+            watchkeeping and cargo-operation experience through cadet, third officer, and second
+            officer roles.
+          </span>
         </div>
         <div className="resume-card">
-          <p>Evidence of Study</p>
-          <h2>{notes.length} structured notes</h2>
-          <span>Built from an Obsidian vault and rendered as a Next.js knowledge site.</span>
+          <p>Sea Service</p>
+          <h2>Chemical tanker and cargo vessel experience</h2>
+          <span>
+            Experience includes chemical tankers with KTM Shipping and multiple coastal/general
+            cargo vessel assignments, with official sea service totaling 7 years 9 months 25 days.
+          </span>
         </div>
         <div className="resume-card">
-          <p>Technical Stack</p>
-          <h2>Next.js · TypeScript · Markdown</h2>
-          <span>Static generated pages, custom note indexer, searchable navigation.</span>
+          <p>License and Training</p>
+          <h2>2nd Mate license track with DP study</h2>
+          <span>
+            Holds maritime radio and safety training records, ECDIS Basic, leadership and
+            management training, and DP Induction study toward offshore/DP career development.
+          </span>
         </div>
         <div className="resume-card muted">
-          <p>Navigation</p>
-          <h2>Knowledge base</h2>
+          <p>Knowledge Base</p>
+          <h2>DP, FMEA and maritime regulations</h2>
           <button type="button" onClick={() => setMenuOpen(true)}>
-            Open table of contents
+            Open study archive
           </button>
         </div>
       </section>

@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Maritime Knowledge",
-  description: "A constellation-style maritime knowledge blog built from Obsidian notes.",
+  title: "Kim Inseong | Maritime Portfolio",
+  description: "Deck officer portfolio and maritime study archive covering DP, FMEA, IMO guidance, and ship regulations.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
