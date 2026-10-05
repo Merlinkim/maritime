@@ -23,6 +23,28 @@ If the GNSS antenna or PRS sensor is offset from the vessel's center of rotation
 Hydroacoustic system에서는 transducer의 기울기를 보정하지 않으면 수심이 깊을수록 수평 위치오차가 커질 수 있다.
 In a hydroacoustic system, if the transducer tilt is not compensated, the horizontal position error can increase as the water depth increases.
 
+## Lever Arm Error
+
+Lever arm은 MRU, GNSS antenna, acoustic transducer, vessel reference point 사이의 거리와 방향이다.
+Lever arm is the distance and direction between the MRU, GNSS antenna, acoustic transducer, and vessel reference point.
+
+작은 roll/pitch 오차도 antenna가 높이 설치되어 있으면 position error로 커질 수 있다.
+A small roll/pitch error can become a position error when the antenna is installed high above the reference point.
+
+```text
+High antenna + wrong roll/pitch compensation
+  → wrong corrected PRS position
+  → false position input to DP
+```
+
+Induction 수준에서는 MRU가 “동요를 완벽히 제거하는 장비”가 아니라 “동요를 측정하고 보정값을 계산하는 장비”라는 점을 기억하면 된다.
+At induction level, remember that the MRU does not perfectly remove motion; it measures motion and helps calculate compensation.
+
+## DPO Watch Point
+
+PRS position이 wave 주기와 비슷하게 흔들리면 MRU compensation, lever arm, time sync 문제를 의심할 수 있다.
+If PRS position moves with a wave-like period, MRU compensation, lever arm, or time synchronization should be considered.
+
 ## Important Configuration
 
 - MRU 설치 방향과 좌표축
