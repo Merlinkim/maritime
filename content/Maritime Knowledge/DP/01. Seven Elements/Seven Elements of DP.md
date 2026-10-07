@@ -5,94 +5,80 @@ aliases:
 
 # Seven Elements of DP
 
-Seven Elements는 DP를 **학습하고 운용 상태를 점검하기 위한 기능적 관점**이다. 전력에서 시작해 추력을 만들고, 센서와 기준시스템으로 결과를 확인하며, 제어기·화면·운용자가 전체 과정을 닫힌 고리로 연결한다.
-Seven Elements is a **functional perspective for learning and checking the operational status of DP**. It starts from power, creates thrust, confirms results with sensors and reference systems, and the controller, HMI, and operator connect the entire process in a closed loop.
+## 왜 7 Elements로 시작하는가
 
-> [!important]
-> Seven Elements는 IMO의 공식 하위 시스템 분류가 아니다. 공식 분류는 [[Three Sub-systems of DP]]이며, Seven Elements는 장비와 인간 요소를 더 세분하여 이해하기 위한 틀이다.
-> Seven Elements is not an official IMO sub-system classification. The official classification is [[Three Sub-systems of DP]], and Seven Elements is a framework to understand equipment and human elements in more detail.
+DP는 처음 보면 장비 이름이 너무 많다.
 
-## The Seven Elements
+Gyro, MRU, GNSS, PRS, thruster, controller, HMI, PMS 같은 단어가 한꺼번에 나오면 머릿속에서 섞인다.
 
-**한국어**
+그래서 먼저 7개 큰 박스로 나누어 본다.
 
-| Element | 핵심 역할 | 핵심 질문 |
-|---|---|---|
-| [[Power]] | DP 장비와 추진기에 전력 공급 | 필요한 전력을 고장 후에도 공급할 수 있는가? |
-| [[Thrusters]] | 전력을 실제 Force와 Moment로 변환 | 명령한 추력이 실제로 발생하는가? |
-| [[Environmental Sensors]] | 바람과 선박 운동 측정 | 외력과 선체 운동을 신뢰성 있게 측정하는가? |
-| [[Position Reference Systems]] | 위치 또는 상대 위치 제공 | 현재 위치를 독립적으로 확인할 수 있는가? |
-| [[DP Controller]] | 상태 추정, 제어 계산, 추력 배분 | 오차를 어떤 추력 명령으로 바꾸는가? |
-| [[HMI]] | 상태·경보 표시와 운용 입력 제공 | 운용자가 상황을 정확히 이해하고 조작할 수 있는가? |
-| [[DP Operator]] | 감시, 판단, 개입 및 작업 중단 결정 | 시스템의 한계와 변화 추세를 알아차리는가? |
+이 7개 박스만 머리에 있으면, 새로운 장비나 문제가 나와도 어디에 붙는지 대략 알 수 있다.
 
-**English**
+## 7개의 큰 박스
 
-| Element | Core Role | Key Question |
-|---|---|---|
-| [[Power]] | Supplying power to DP equipment and thrusters | Can the necessary power be supplied even after a failure? |
-| [[Thrusters]] | Converting power into actual Force and Moment | Is the commanded thrust actually generated? |
-| [[Environmental Sensors]] | Measuring wind and vessel motion | Are external forces and vessel motion measured reliably? |
-| [[Position Reference Systems]] | Providing position or relative position | Can the current position be independently confirmed? |
-| [[DP Controller]] | State estimation, control calculation, thrust allocation | How are errors converted into thrust commands? |
-| [[HMI]] | Providing status/alarm display and operational input | Can the operator accurately understand and operate the situation? |
-| [[DP Operator]] | Monitoring, judgment, intervention, and decision to stop operation | Is the system's limit and trend noticed? |
+| 번호 | 요소 | 쉬운 설명 | 핵심 질문 |
+|---|---|---|---|
+| 1 | [[Power]] | DP 장비와 추진기에 전기를 주는 부분 | 고장 후에도 전기가 남는가? |
+| 2 | [[Thrusters]] | 전기를 실제 힘으로 바꾸는 부분 | 명령한 힘이 실제로 나오는가? |
+| 3 | [[Environmental Sensors]] | 바람과 선박 동요를 재는 부분 | 외부 힘과 선체 운동을 믿을 수 있게 재는가? |
+| 4 | [[Position Reference Systems]] | 선박 위치를 알려주는 부분 | 지금 위치를 독립적으로 확인할 수 있는가? |
+| 5 | [[DP Controller]] | 센서값을 해석하고 추력 명령을 만드는 두뇌 | 오차를 어떤 명령으로 바꾸는가? |
+| 6 | [[HMI]] | 사람이 보는 화면과 조작부 | 운용자가 상황을 이해할 수 있는가? |
+| 7 | [[DP Operator]] | 시스템을 감시하고 판단하는 사람 | 언제 계속하고 언제 멈출지 아는가? |
 
-## Functional Flow
+## 가장 단순한 흐름
 
 ```text
-Power → Thrusters → Vessel response
-                    ↑            ↓
-DP Operator ↔ HMI ↔ DP Controller
-                    ↑
-     Environmental Sensors + Position References
+Power
+→ Thrusters
+→ Vessel movement
+→ Sensors / PRS
+→ DP Controller
+→ HMI / DP Operator
+→ 다시 Thrusters
 ```
 
-어느 한 요소도 단독으로 DP 성능을 보장하지 않는다. 위치 기준이 정확해도 추력 여유가 없으면 위치를 유지할 수 없고, 장비가 정상이어도 운용자가 경보와 추세를 잘못 해석하면 안전한 작업을 지속할 수 없다.
-No single element guarantees DP performance. Even if the position reference is accurate, if there is no thrust reserve, the position cannot be maintained, and even if the equipment is normal, if the operator misinterprets alarms and trends, safe operation cannot continue.
+이 흐름은 완전한 원이 된다.
 
-## Relationship to the IMO View
+그래서 DP는 closed-loop 시스템이다.
 
-**한국어**
+## 각 요소를 closed-loop에 붙여보기
 
-| Seven Elements | 주로 대응하는 IMO 하위 시스템 |
+| 요소 | Closed-loop에서의 위치 |
 |---|---|
-| Power | [[Power System (IMO)]] |
-| Thrusters | [[Thruster System (IMO)]] |
-| Environmental Sensors | [[DP Control System (IMO)]] |
-| Position Reference Systems | [[DP Control System (IMO)]] |
-| DP Controller | [[DP Control System (IMO)]] |
-| HMI | [[DP Control System (IMO)]] |
-| DP Operator | 하위 시스템 외부의 인간 운용 요소 |
+| Power | 명령을 실제 힘으로 만들기 위한 에너지 |
+| Thrusters | controller 명령을 실제 힘으로 바꾸는 출력 장치 |
+| Environmental Sensors | 바람, 동요 같은 외부 조건 입력 |
+| Position Reference Systems | 위치 feedback |
+| DP Controller | 오차 계산, 상태 추정, 추력 계산 |
+| HMI | 사람이 상태를 보고 조작하는 창 |
+| DP Operator | 시스템을 감시하고 운용 판단을 내리는 사람 |
 
-**English**
+## 헷갈릴 때 돌아올 질문
 
-| Seven Elements | Corresponding IMO Sub-system |
-|---|---|
-| Power | [[Power System (IMO)]] |
-| Thrusters | [[Thruster System (IMO)]] |
-| Environmental Sensors | [[DP Control System (IMO)]] |
-| Position Reference Systems | [[DP Control System (IMO)]] |
-| DP Controller | [[DP Control System (IMO)]] |
-| HMI | [[DP Control System (IMO)]] |
-| DP Operator | Human operational element outside the sub-system |
+새로운 장비나 문제가 나오면 이렇게 묻는다.
 
-실제 선박에서는 PMS, 네트워크, 인터페이스처럼 여러 시스템의 경계에 걸친 장비도 존재한다.
-In actual vessels, there are also pieces of equipment that span across the boundaries of multiple systems, such as PMS, network, and interface.
+```text
+이건 7개 중 어디에 들어가지?
+이 값은 입력인가, 계산인가, 출력인가?
+이 문제가 closed-loop의 어느 부분을 흔들지?
+```
 
-## Study Order
+## IMO의 3 Sub-systems와의 관계
 
-1. [[Power]]
-2. [[Thrusters]]
-3. [[Environmental Sensors]]
-4. [[Position Reference Systems]]
-5. [[DP Controller]]
-6. [[HMI]]
-7. [[DP Operator]]
-8. [[Three Sub-systems of DP]]에서 공식 경계와 다시 비교
-8. Re-comparing with the official boundaries in [[Three Sub-systems of DP]]
+IMO 문서에서는 DP를 보통 세 하위 시스템으로 본다.
 
-## References
+- [[Power System (IMO)]]
+- [[Thruster System (IMO)]]
+- [[DP Control System (IMO)]]
 
-- [USCG — Dynamic Positioning Systems Overview](https://www.dco.uscg.mil/OCSNCOE/DP/Overview/)
-- [The Nautical Institute — What is Dynamic Positioning?](https://www.nautinst.org/resources-page/what-is-dynamic-positioning.html)
+7 Elements는 공부하기 쉽게 더 잘게 나눈 틀이다.
+
+공식 문서와 연결할 때는 [[Three Sub-systems of DP]]를 같이 보면 된다.
+
+## 다음에 볼 것
+
+- [[Closed-loop Control]]
+- [[Input Signal Integrity and Sensor Data Flow]]
+- [[PRS and Gyro Troubleshooting Before Technician Arrival]]
